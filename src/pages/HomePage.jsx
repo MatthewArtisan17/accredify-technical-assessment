@@ -8,6 +8,7 @@ import { Spin } from "antd";
 import CareerGoal from "../components/CareerGoal";
 
 import "../styles/pages/HomePage.css";
+import RecentDocuments from "../components/RecentDocuments";
 
 const HomePage = () => {
 	const dispatch = useDispatch();
@@ -56,7 +57,10 @@ const HomePage = () => {
 						Manage your documents issued by SMU Academy or track your career goal.
 					</p>
 				</div>
-				<CareerGoal />
+				<div className='homepage-main-content'>
+					<CareerGoal />
+					<RecentDocuments />
+				</div>
 			</div>
 		</div>
 	);

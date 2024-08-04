@@ -35,7 +35,7 @@ const CareerGoal = () => {
 	const article = getArticle(careerGoal?.name);
 
 	return (
-		<>
+		<div>
 			<h2 className='career-goal-title'>Career Goal</h2>
 			<div className='career-goal-card'>
 				<p className='font-bold text-sm text-[#5B6270]'>Your Progress</p>
@@ -54,7 +54,7 @@ const CareerGoal = () => {
 					View Insights
 				</Link>
 			</div>
-		</>
+		</div>
 	);
 };
 
