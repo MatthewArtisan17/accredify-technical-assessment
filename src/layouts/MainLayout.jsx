@@ -2,19 +2,24 @@
 import React from "react";
 import { Layout, Dropdown, Space } from "antd";
 import { DownOutlined } from "@ant-design/icons";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Sidebar from "./Sidebar";
-
-import LogoutIcon from "../assets/icons/Logout.png";
-
 import ProfileCircle from "../components/ProfileCircle";
+import LogoutIcon from "../assets/icons/Logout.png";
 import "../styles/layouts/MainLayout.css";
 
 const { Header, Content, Sider } = Layout;
 
 const MainLayout = () => {
 	const user = useSelector((state) => state.user.data);
+	const navigate = useNavigate(); // Hook to navigate programmatically
+
+	const handleLogout = () => {
+		// Clear user session or token if needed
+		navigate("/login"); // Redirect to login page
+	};
+
 	const items = [
 		{
 			label: (
@@ -38,6 +43,7 @@ const MainLayout = () => {
 				</div>
 			),
 			key: "0",
+			onClick: handleLogout, // Add onClick handler
 		},
 	];
 

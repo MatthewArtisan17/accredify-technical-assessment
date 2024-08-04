@@ -1,0 +1,8 @@
+.login-layout {
+    @apply flex justify-center items-center min-h-screen;
+}
+
+.login-content {
+    @apply px-5 pt-4 h-fit w-full max-w-[400px] bg-white rounded-lg;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
