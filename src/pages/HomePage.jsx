@@ -5,6 +5,7 @@ import { fetchDocumentsAsync } from "../store/documentSlice";
 import { fetchCareerGoalAsync } from "../store/careerGoalSlice";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
+import CareerGoal from "../components/CareerGoal";
 
 import "../styles/pages/HomePage.css";
 
@@ -55,6 +56,7 @@ const HomePage = () => {
 						Manage your documents issued by SMU Academy or track your career goal.
 					</p>
 				</div>
+				<CareerGoal />
 			</div>
 		</div>
 	);

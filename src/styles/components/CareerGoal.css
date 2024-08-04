@@ -1,0 +1,23 @@
+.career-goal-card {
+    @apply w-[260px] py-8 px-10 flex flex-col gap-6 bg-white rounded-md items-center;
+
+    border: 1px solid #D0D2D6;
+}
+  
+.career-goal-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 16px;
+}
+
+.career-goal-name {
+    @apply font-bold text-xl
+}
+
+.ant-progress.ant-progress-circle .ant-progress-text {
+    @apply text-[#493DF5] font-bold text-[28px];
+}
+
+.career-goal-view-insights {
+    @apply text-[#493DF5] font-bold text-[14px] cursor-pointer hover:underline;
+}
