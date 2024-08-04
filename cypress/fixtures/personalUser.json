@@ -1,0 +1,9 @@
+{
+	"data": {
+	  "id": "123",
+	  "name": "John Doe",
+	  "current_organisation": {
+		"is_personal": true
+	  }
+	}
+  }
