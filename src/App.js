@@ -3,7 +3,11 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./store";
 import HomePage from "./pages/HomePage";
-import LoginPage from './pages/LoginPage';
+import DocumentsPage from "./pages/DocumentsPage";
+import CareerGoalPage from "./pages/CareerGoalPage";
+import SecurityPage from "./pages/SecurityPage";
+import SettingsPage from "./pages/SettingsPage";
+import LoginPage from "./pages/LoginPage";
 import MainLayout from "./layouts/MainLayout";
 
 const App = () => (
@@ -11,9 +15,12 @@ const App = () => (
 		<Router>
 			<Routes>
 				<Route path='/login' element={<LoginPage />} />
-				<Route path='/' element={<MainLayout />}>
-					<Route index element={<HomePage />} />
-					{/* Define other routes here */}
+				<Route element={<MainLayout />}>
+					<Route path='/' element={<HomePage />} />
+					<Route path='/documents' element={<DocumentsPage />} />
+					<Route path='/career-goal' element={<CareerGoalPage />} />
+					<Route path='/security' element={<SecurityPage />} />
+					<Route path='/settings' element={<SettingsPage />} />
 				</Route>
 			</Routes>
 		</Router>

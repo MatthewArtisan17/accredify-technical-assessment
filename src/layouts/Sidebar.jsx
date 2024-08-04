@@ -1,6 +1,7 @@
 // src/components/Sidebar.jsx
 import React from "react";
 import { Menu } from "antd";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import HomeIcon from "../assets/icons/Home.png";
 import DocumentIcon from "../assets/icons/Docs.png";
 import LightbulbIcon from "../assets/icons/Lightbulb.png";
@@ -22,15 +23,40 @@ const items = [
 	getItem("3", <img src={LightbulbIcon} alt='Career Goal' />),
 	getItem("4", <img src={SecurityIcon} alt='Security' />),
 	getItem("5", <img src={SettingsIcon} alt='Settings' />),
-];
+  ];
 
 const Sidebar = ({ userName }) => {
+	const navigate = useNavigate();
+
+	const handleMenuClick = (e) => {
+		const key = e.key;
+		switch (key) {
+			case '1':
+				navigate('/');
+				break;
+			case '2':
+				navigate('/documents');
+				break;
+			case '3':
+				navigate('/career-goal');
+				break;
+			case '4':
+				navigate('/security');
+				break;
+			case '5':
+				navigate('/settings');
+				break;
+			default:
+				break;
+		}
+	};
+
 	return (
 		<div>
 			<div className='sider-profile-container'>
 				<ProfileCircle name={userName} />
 			</div>
-			<Menu className='menu' mode='inline' defaultSelectedKeys={["1"]} items={items} />
+			<Menu className='menu' mode='inline' defaultSelectedKeys={["1"]} onClick={handleMenuClick} items={items} />
 		</div>
 	);
 };

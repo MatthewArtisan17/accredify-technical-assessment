@@ -13,11 +13,10 @@ const { Header, Content, Sider } = Layout;
 
 const MainLayout = () => {
 	const user = useSelector((state) => state.user.data);
-	const navigate = useNavigate(); // Hook to navigate programmatically
+	const navigate = useNavigate();
 
 	const handleLogout = () => {
-		// Clear user session or token if needed
-		navigate("/login"); // Redirect to login page
+		navigate("/login");
 	};
 
 	const items = [
@@ -43,7 +42,7 @@ const MainLayout = () => {
 				</div>
 			),
 			key: "0",
-			onClick: handleLogout, // Add onClick handler
+			onClick: handleLogout,
 		},
 	];
 
