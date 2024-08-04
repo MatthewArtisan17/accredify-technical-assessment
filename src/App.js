@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./store";
 import HomePage from "./pages/HomePage";
-import MainLayout from "./components/MainLayout";
+import MainLayout from "./layouts/MainLayout";
 
 const App = () => (
 	<Provider store={store}>

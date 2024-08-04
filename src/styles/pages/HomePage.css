@@ -1,0 +1,11 @@
+.homepage-container {
+    @apply p-12;
+}
+
+.homepage-content {
+    @apply flex flex-row sm:flex-col w-[95%] max-w-[1092px] h-fit mx-auto;
+}
+
+.homepage-title {
+    @apply flex flex-col gap-2 w-full mb-8
+}

@@ -21,17 +21,3 @@
 .ant-menu-item-selected{
     @apply bg-[#353D4E] !important;
 }
-
-.site-layout{
-    @apply bg-[#151F32] !important;
-}
-
-.header{
-    @apply p-0 h-16 bg-white rounded-tl-lg;
-
-    border-bottom: 1px solid #D0D2D6;
-}
-
-.content{
-    @apply bg-white rounded-bl-lg;
-}

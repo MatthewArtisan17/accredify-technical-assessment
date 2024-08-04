@@ -1,0 +1,21 @@
+.site-layout{
+    @apply bg-[#151F32] !important;
+}
+
+.header{
+    @apply p-0 px-10 h-16 bg-white rounded-tl-lg flex justify-end;
+
+    border-bottom: 1px solid #D0D2D6;
+}
+
+.header-profile{
+    @apply w-6 h-6 rounded-full bg-[#493DF5] text-white flex justify-center items-center text-[14px] leading-6
+}
+
+.content{
+    @apply bg-white rounded-bl-lg;
+}
+
+.ant-dropdown .ant-dropdown-menu{
+    @apply w-[270px]
+}
