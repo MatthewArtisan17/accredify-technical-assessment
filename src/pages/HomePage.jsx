@@ -6,9 +6,8 @@ import { fetchCareerGoalAsync } from "../store/careerGoalSlice";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import CareerGoal from "../components/CareerGoal";
-
-import "../styles/pages/HomePage.css";
 import RecentDocuments from "../components/RecentDocuments";
+import "../styles/pages/HomePage.css";
 
 const HomePage = () => {
 	const dispatch = useDispatch();
@@ -48,16 +47,18 @@ const HomePage = () => {
 		);
 	}
 
+	const showCareerGoal = user?.current_organisation?.is_personal !== true;
+
 	return (
 		<div className='homepage-content'>
 			<div className='homepage-title'>
 				<h2 className='font-bold text-[28px]'>Hi, {user?.name} 👋</h2>
 				<p className='text-[16px] text-[#5B6270]'>
-					Manage your documents issued by SMU Academy or track your career goal.
+					Manage your documents{ showCareerGoal && " issued by SMU Academy or track your career goal"}. 
 				</p>
 			</div>
 			<div className='homepage-main-content'>
-				<CareerGoal />
+				{showCareerGoal && <CareerGoal />}
 				<RecentDocuments />
 			</div>
 		</div>

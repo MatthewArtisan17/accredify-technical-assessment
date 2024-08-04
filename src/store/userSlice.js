@@ -19,6 +19,11 @@ const userSlice = createSlice({
       state.data = null;
       state.error = null;
     },
+    togglePersonal: (state) => {
+      if (state.data) {
+        state.data.current_organisation.is_personal = !state.data.current_organisation.is_personal;
+      }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -36,5 +41,5 @@ const userSlice = createSlice({
   },
 });
 
-export const { logout } = userSlice.actions; // Export the logout action
+export const { logout, togglePersonal } = userSlice.actions; // Export the togglePersonal action
 export default userSlice.reducer;

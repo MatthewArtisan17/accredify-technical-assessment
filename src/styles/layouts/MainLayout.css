@@ -3,7 +3,7 @@
 }
 
 .header{
-    @apply p-0 px-10 h-16 bg-white rounded-tl-lg flex justify-end;
+    @apply p-0 px-10 h-16 bg-white rounded-tl-lg flex justify-end items-center;
 
     border-bottom: 1px solid #D0D2D6;
 }
