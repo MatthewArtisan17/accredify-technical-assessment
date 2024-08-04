@@ -1,21 +1,14 @@
 .recent-documents-container {
+    display: flex;
+    flex-direction: column;
     flex-grow: 1;
 }
 
 .recent-documents-title {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 16px;
+    @apply text-[24px] font-bold mb-4;
 }
 
 .recent-documents-card {
-    width: 100%;
-    padding: 16px;
-    background: white;
+    @apply w-full h-full py-8 px-6 bg-white rounded-md flex flex-col gap-4 items-center;
     border: 1px solid #d0d2d6;
-    border-radius: 8px;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    align-items: center;
 }

@@ -49,18 +49,16 @@ const HomePage = () => {
 	}
 
 	return (
-		<div className='homepage-container'>
-			<div className='homepage-content'>
-				<div className='homepage-title'>
-					<h2 className='font-bold text-[28px]'>Hi, {user?.name} 👋</h2>
-					<p className='text-[16px] text-[#5B6270]'>
-						Manage your documents issued by SMU Academy or track your career goal.
-					</p>
-				</div>
-				<div className='homepage-main-content'>
-					<CareerGoal />
-					<RecentDocuments />
-				</div>
+		<div className='homepage-content'>
+			<div className='homepage-title'>
+				<h2 className='font-bold text-[28px]'>Hi, {user?.name} 👋</h2>
+				<p className='text-[16px] text-[#5B6270]'>
+					Manage your documents issued by SMU Academy or track your career goal.
+				</p>
+			</div>
+			<div className='homepage-main-content'>
+				<CareerGoal />
+				<RecentDocuments />
 			</div>
 		</div>
 	);

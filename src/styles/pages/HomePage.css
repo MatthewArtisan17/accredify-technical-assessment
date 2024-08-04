@@ -1,9 +1,5 @@
-.homepage-container {
-    @apply p-12;
-}
-
 .homepage-content {
-    @apply flex flex-col w-[95%] max-w-[1092px] h-fit mx-auto;
+    @apply flex flex-col w-[95%] max-w-[1092px] mx-auto;
 }
 
 .homepage-title {
@@ -11,5 +7,5 @@
 }
 
 .homepage-main-content{
-    @apply flex flex-col sm:flex-row gap-8 w-full;
+    @apply flex flex-col sm:flex-row gap-8 w-full h-full;
 }

@@ -13,7 +13,7 @@
 }
 
 .content{
-    @apply bg-white rounded-bl-lg;
+    @apply bg-white rounded-bl-lg p-12;
 }
 
 .ant-dropdown .ant-dropdown-menu{

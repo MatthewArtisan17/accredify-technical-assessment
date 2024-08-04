@@ -1,14 +1,14 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Progress } from "antd";
+import { Progress, Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
-import { Spin } from "antd";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import "../styles/components/CareerGoal.css";
 
 const CareerGoal = () => {
 	const careerGoal = useSelector((state) => state.careerGoal.data);
 	const loading = useSelector((state) => state.careerGoal.loading);
+	const location = useLocation();
 
 	const getArticle = (word) => {
 		if (!word) return "";
@@ -50,9 +50,11 @@ const CareerGoal = () => {
 					<p>I want to become {article}:</p>
 					<p className='career-goal-name'>{careerGoal?.name || "N/A"}</p>
 				</div>
-				<Link to='/career-goal' className='career-goal-view-insights'>
-					View Insights
-				</Link>
+				{location.pathname !== "/career-goal" && (
+					<Link to='/career-goal' className='career-goal-view-insights'>
+						View Insights
+					</Link>
+				)}
 			</div>
 		</div>
 	);

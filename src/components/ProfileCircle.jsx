@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { getInitials } from '../utils/utils';
 
-const ProfileCircle = ({ name, size }) => {
+const ProfileCircle = ({ name, size = '40px' }) => {
   const initials = getInitials(name);
 
   return (
@@ -24,10 +24,6 @@ const ProfileCircle = ({ name, size }) => {
 ProfileCircle.propTypes = {
   name: PropTypes.string.isRequired,
   size: PropTypes.string,
-};
-
-ProfileCircle.defaultProps = {
-  size: '40px',
 };
 
 export default ProfileCircle;
