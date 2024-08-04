@@ -4,30 +4,6 @@ import { fetchUserAsync } from "../store/userSlice";
 import { fetchDocumentsAsync } from "../store/documentSlice";
 import { fetchCareerGoalAsync } from "../store/careerGoalSlice";
 
-import HomeIcon from "../assets/icons/Home.png";
-import DocumentIcon from "../assets/icons/Docs.png";
-import LightbulbIcon from "../assets/icons/Lightbulb.png";
-import SecurityIcon from "../assets/icons/Security.png";
-import SettingsIcon from "../assets/icons/Settings.png";
-
-import { Breadcrumb, Layout, Menu, theme } from "antd";
-const { Header, Content, Footer, Sider } = Layout;
-
-const getItem = (key, icon) => {
-	return {
-		key,
-		icon,
-	};
-};
-
-const items = [
-	getItem("1", <img src={HomeIcon} alt='Home' />),
-	getItem("2", <img src={DocumentIcon} alt='Home' />),
-	getItem("3", <img src={LightbulbIcon} alt='Home' />),
-	getItem("4", <img src={SecurityIcon} alt='Home' />),
-	getItem("5", <img src={SettingsIcon} alt='Home' />),
-];
-
 const HomePage = () => {
 	const dispatch = useDispatch();
 	const user = useSelector((state) => state.user.data);
