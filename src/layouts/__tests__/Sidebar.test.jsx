@@ -1,4 +1,3 @@
-// src/layouts/__tests__/Sidebar.test.js
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
@@ -86,5 +85,39 @@ describe('Sidebar', () => {
     );
 
     expect(screen.getByAltText('Documents').parentElement).toHaveClass('ant-menu-item-selected');
+  });
+
+  test('does not render Career Goal item when isPersonal is true', () => {
+    store = mockStore({
+      user: {
+        data: {
+          current_organisation: { is_personal: true },
+        },
+      },
+    });
+
+    render(
+      <Provider store={store}>
+        <Router>
+          <Sidebar userName="John Doe" />
+        </Router>
+      </Provider>
+    );
+
+    expect(screen.queryByAltText('Career Goal')).toBeNull();
+  });
+
+  test('default selected key is Home when pathname does not match', () => {
+    useLocation.mockReturnValue({ pathname: '/non-existent-path' });
+
+    render(
+      <Provider store={store}>
+        <Router>
+          <Sidebar userName="John Doe" />
+        </Router>
+      </Provider>
+    );
+
+    expect(screen.getByAltText('Home').parentElement).toHaveClass('ant-menu-item-selected');
   });
 });

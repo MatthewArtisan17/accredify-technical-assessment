@@ -1,89 +1,121 @@
-// src/components/__tests__/CareerGoal.test.js
-import React from "react";
-import { render, screen } from "@testing-library/react";
-import "@testing-library/jest-dom/extend-expect";
-import { Provider } from "react-redux";
-import configureStore from "redux-mock-store";
-import { BrowserRouter as Router, MemoryRouter } from "react-router-dom";
-import CareerGoal from "../CareerGoal";
-import { useSelector } from "react-redux";
-
-// Mock useSelector
-jest.mock("react-redux", () => ({
-	useSelector: jest.fn(),
-}));
+import { render, screen, waitFor } from '@testing-library/react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import configureStore from 'redux-mock-store';
+import CareerGoal from '../CareerGoal';
+import '@testing-library/jest-dom/extend-expect';
 
 const mockStore = configureStore([]);
 
-describe("CareerGoal", () => {
-	let store;
+describe('CareerGoal', () => {
+  let store;
 
-	beforeEach(() => {
-		store = mockStore({
-			careerGoal: {
-				data: { name: "Engineer", progress: 70 },
-				loading: false,
-			},
-		});
+  beforeEach(() => {
+    store = mockStore({
+      careerGoal: {
+        data: null,
+        loading: false
+      }
+    });
+  });
 
-		useSelector.mockImplementation((selector) => selector(store.getState()));
-	});
+  test('renders CareerGoal and its elements', () => {
+    render(
+      <Provider store={store}>
+        <Router>
+          <Routes>
+            <Route path="/" element={<CareerGoal />} />
+          </Routes>
+        </Router>
+      </Provider>
+    );
 
-	test("renders loading spinner when loading", () => {
-		store = mockStore({
-			careerGoal: {
-				data: null,
-				loading: true,
-			},
-		});
+    expect(screen.getByText(/Career Goal/i)).toBeInTheDocument();
+  });
 
-		useSelector.mockImplementation((selector) => selector(store.getState()));
+  test('shows loading spinner when loading', () => {
+    // Render the CareerGoal component with loading state
+    render(<CareerGoal />);
 
-		render(
-			<Provider store={store}>
-				<Router>
-					<CareerGoal />
-				</Router>
-			</Provider>
-		);
+    // Check if the spinner element is in the document
+    const spinner = screen.getByRole('img', { name: /loading/i });
+    expect(spinner).toBeInTheDocument();
 
-		expect(screen.getByText("Loading...")).toBeInTheDocument();
-	});
+    // Optionally, check if it has the 'ant-spin' class or other relevant classes
+    expect(spinner.parentElement).toHaveClass('ant-spin');
+  });
 
-	test("renders career goal data correctly", () => {
-		render(
-			<Provider store={store}>
-				<Router>
-					<CareerGoal />
-				</Router>
-			</Provider>
-		);
+  test('displays career goal progress and name when data is available', () => {
+    store = mockStore({
+      careerGoal: {
+        data: { name: 'Software Engineer', progress: 75 },
+        loading: false
+      }
+    });
 
-		expect(screen.getByText("Career Goal")).toBeInTheDocument();
-		expect(screen.getByText("Your Progress")).toBeInTheDocument();
-		expect(screen.getByText("I want to become an:")).toBeInTheDocument();
-		expect(screen.getByText("Engineer")).toBeInTheDocument();
-	});
+    render(
+      <Provider store={store}>
+        <Router>
+          <Routes>
+            <Route path="/" element={<CareerGoal />} />
+          </Routes>
+        </Router>
+      </Provider>
+    );
 
-	test('conditionally renders "View Insights" link', () => {
-		render(
-			<Provider store={store}>
-				<MemoryRouter initialEntries={["/"]}>
-					<CareerGoal />
-				</MemoryRouter>
-			</Provider>
-		);
+    expect(screen.getByText(/Your Progress/i)).toBeInTheDocument();
+    expect(screen.getByText(/I want to become a:/i)).toBeInTheDocument();
+    expect(screen.getByText(/Software Engineer/i)).toBeInTheDocument();
+    expect(screen.getByRole('progressbar')).toHaveAttribute('aria-valuenow', '75');
+  });
 
-		expect(screen.getByText("View Insights")).toBeInTheDocument();
+  test('displays "View Insights" link when not on /career-goal route', () => {
+    render(
+      <Provider store={store}>
+        <Router>
+          <Routes>
+            <Route path="/" element={<CareerGoal />} />
+          </Routes>
+        </Router>
+      </Provider>
+    );
 
-		render(
-			<Provider store={store}>
-				<MemoryRouter initialEntries={["/career-goal"]}>
-					<CareerGoal />
-				</MemoryRouter>
-			</Provider>
-		);
+    expect(screen.getByText(/View Insights/i)).toBeInTheDocument();
+  });
 
-		expect(screen.queryByText("View Insights")).not.toBeInTheDocument();
-	});
+  test('does not display "View Insights" link when on /career-goal route', () => {
+    // Set up the store and router
+    store = mockStore({
+      careerGoal: {
+        data: { name: 'Software Engineer', progress: 75 },
+        loading: false
+      }
+    });
+
+    render(
+      <Provider store={store}>
+        <Router>
+          <Routes>
+            <Route path="/career-goal" element={<CareerGoal />} />
+          </Routes>
+        </Router>
+      </Provider>
+    );
+
+    // Set the route to /career-goal
+    window.history.pushState({}, 'Career Goal', '/career-goal');
+
+    // Re-render to reflect route change
+    render(
+      <Provider store={store}>
+        <Router>
+          <Routes>
+            <Route path="/career-goal" element={<CareerGoal />} />
+          </Routes>
+        </Router>
+      </Provider>
+    );
+
+    expect(screen.queryByText(/View Insights/i)).toBeNull();
+  });
 });

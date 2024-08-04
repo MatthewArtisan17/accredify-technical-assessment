@@ -1,97 +1,149 @@
 // src/layouts/__tests__/MainLayout.test.js
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
-import '@testing-library/jest-dom/extend-expect';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
-import { BrowserRouter as Router } from 'react-router-dom';
+import thunk from 'redux-thunk';
 import MainLayout from '../MainLayout';
-import { persistor } from '../../store';
 import { logout, togglePersonal } from '../../store/userSlice';
+import '@testing-library/jest-dom/extend-expect';
 
-jest.mock('../../store', () => ({
-  persistor: { purge: jest.fn() },
-}));
-
-const mockStore = configureStore([]);
-
-const initialState = {
-  user: {
-    data: {
-      name: 'John Doe',
-      current_organisation: { is_personal: false },
-    },
-  },
-};
+// Create a mock store
+const middlewares = [thunk];
+const mockStore = configureStore(middlewares);
 
 describe('MainLayout', () => {
   let store;
 
   beforeEach(() => {
-    store = mockStore(initialState);
-    store.dispatch = jest.fn();
+    store = mockStore({
+      user: {
+        data: {
+          name: 'John Doe'
+        }
+      }
+    });
   });
 
-  test('renders MainLayout and user information', () => {
+  test('renders Sidebar, ProfileCircle, and Outlet', () => {
     render(
       <Provider store={store}>
         <Router>
-          <MainLayout />
+          <Routes>
+            <Route path="/" element={<MainLayout />}>
+              <Route path="*" element={<div>Test Content</div>} />
+            </Route>
+          </Routes>
         </Router>
       </Provider>
     );
 
-    expect(screen.getByText('John Doe')).toBeInTheDocument();
+    // Check if Sidebar is rendered (you may need to adjust based on Sidebar content)
+    expect(screen.getByText(/Sidebar/)).toBeInTheDocument();
+
+    // Check if ProfileCircle is rendered in the dropdown
+    expect(screen.getByRole('button')).toBeInTheDocument();
+
+    // Check if Outlet renders content
+    expect(screen.getByText('Test Content')).toBeInTheDocument();
   });
 
-  test('handles Toggle Personal button click', () => {
+  test('displays user profile and provides logout option', async () => {
     render(
       <Provider store={store}>
         <Router>
-          <MainLayout />
+          <Routes>
+            <Route path="/" element={<MainLayout />}>
+              <Route path="*" element={<div>Test Content</div>} />
+            </Route>
+          </Routes>
         </Router>
       </Provider>
     );
 
-    fireEvent.click(screen.getByText('Toggle Personal'));
-    expect(store.dispatch).toHaveBeenCalledWith(togglePersonal());
+    // Open dropdown menu
+    fireEvent.click(screen.getByText(/John Doe/));
+
+    // Check if profile info is displayed
+    expect(screen.getByText(/John Doe/)).toBeInTheDocument();
+    expect(screen.getByText(/Recipient/)).toBeInTheDocument();
+
+    // Check if logout option is present
+    expect(screen.getByText(/Log Out/)).toBeInTheDocument();
   });
 
-  test('handles Logout button click', async () => {
+  test('logout functionality', async () => {
+    // Mock dispatch function
+    jest.spyOn(store, 'dispatch').mockImplementation(() => Promise.resolve());
+
     render(
       <Provider store={store}>
         <Router>
-          <MainLayout />
+          <Routes>
+            <Route path="/" element={<MainLayout />}>
+              <Route path="*" element={<div>Test Content</div>} />
+            </Route>
+          </Routes>
         </Router>
       </Provider>
     );
 
-    fireEvent.click(screen.getByRole('button', { name: /log out/i }));
-    expect(persistor.purge).toHaveBeenCalled();
-    expect(store.dispatch).toHaveBeenCalledWith(logout());
+    // Open dropdown menu
+    fireEvent.click(screen.getByText(/John Doe/));
+
+    // Trigger logout
+    fireEvent.click(screen.getByText(/Log Out/));
+
+    // Verify if logout action is dispatched
+    await waitFor(() => {
+      expect(store.dispatch).toHaveBeenCalledWith(logout());
+    });
   });
 
-  test('renders Sidebar with username', () => {
+  test('toggle personal functionality', async () => {
+    // Mock dispatch function
+    jest.spyOn(store, 'dispatch').mockImplementation(() => Promise.resolve());
+
     render(
       <Provider store={store}>
         <Router>
-          <MainLayout />
+          <Routes>
+            <Route path="/" element={<MainLayout />}>
+              <Route path="*" element={<div>Test Content</div>} />
+            </Route>
+          </Routes>
         </Router>
       </Provider>
     );
 
-    expect(screen.getByText('John Doe')).toBeInTheDocument();
+    // Trigger toggle personal
+    fireEvent.click(screen.getByText(/Toggle Personal/));
+
+    // Verify if togglePersonal action is dispatched
+    await waitFor(() => {
+      expect(store.dispatch).toHaveBeenCalledWith(togglePersonal());
+    });
   });
 
-  test('renders Outlet', () => {
+  test('dropdown menu actions', async () => {
     render(
       <Provider store={store}>
         <Router>
-          <MainLayout />
+          <Routes>
+            <Route path="/" element={<MainLayout />}>
+              <Route path="*" element={<div>Test Content</div>} />
+            </Route>
+          </Routes>
         </Router>
       </Provider>
     );
 
-    expect(screen.getByText('Outlet')).toBeInTheDocument();
+    // Open dropdown menu
+    fireEvent.click(screen.getByText(/John Doe/));
+
+    // Check if "View" and "Delete" options are available
+    expect(screen.getByText(/View/)).toBeInTheDocument();
+    expect(screen.getByText(/Delete/)).toBeInTheDocument();
   });
 });
